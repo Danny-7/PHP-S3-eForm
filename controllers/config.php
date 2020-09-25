@@ -1,32 +1,33 @@
 <?php
-
-    $hostname = "localhost";
-	$base= "econtact";
-	$loginBD= "root";
-    $passBD="root";
     
-    $INSERT = "INSERT INTO(nom, prenom, num, email) VALUES(?, ?, ?, ?)";
-    $FETCH = "SELECT * FROM utilisateur WHERE email=? AND num=?";
+    $GLOBALS['INSERT'] = 'INSERT INTO utilisateur (nom, prenom, num, email) VALUES(?, ?, ?, ?)';
+    $GLOBALS['FETCH'] = 'SELECT * FROM utilisateur WHERE email=? AND num=?';
 
     try {
-        $pdo = new PDO ("mysql:server=$hostname; dbname=$base", "$loginBD", "$passBD");
+        $bdd = new PDO ('mysql:host=localhost;dbname=econtact;charset=utf8', 'root', '');
     }
     catch (PDOException $e) {
-        die  ("Echec de connexion : " . utf8_encode($e->getMessage()) . "\n");
+        echo ("Echec de connexion : " . utf8_encode($e->getMessage()) . "\n");
     }
 
-    function insert($lastName, $firstName, $num, $email) {
-        $stmt = $pdo->prepare($INSERT);
-        $stmt = $stmt->execute(array(
-            $lastName,
-            $firstName,
-            $num,
-            $email
-        ));
+    function insertData($lastName, $firstName, $num, $email, $bdd) {
+        $num = password_hash($num, PASSWORD_BCRYPT);
+        try{
+            $stmt = $bdd->prepare($GLOBALS['INSERT']);
+            $stmt = $stmt->execute([
+                $lastName,
+                $firstName,
+                $num,
+                $email
+            ]);
+        }catch(PDOException $e){
+            die("Echec d'insertion: ".utf8_encode($e->getMessage()));
+        }
+        
     };
 
-    function fetchUser($email, $num) {
-        $stmt = $pdo->prepare($FETCH);
+    function fetchUser($email, $num, $bdd) {
+        $stmt = $bdd->prepare($GLOBALS['FETCH']);
         $stmt = $stmt->execute(array(
             $email,
             $num
@@ -37,7 +38,7 @@
         return null;
     }
 
-    function checkUser($email, $num) {
-        return fetchUser($email, $num) ? true: false;
+    function checkUser($email, $num, $bdd) {
+        return fetchUser($email, $num, $bdd) ? true: false;
     };
 
