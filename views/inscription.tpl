@@ -16,6 +16,7 @@
             <div class="form-control">
                 <label>Last name</label>
                 <input class="rounded" type="text" name="lastName" required>
+                <div><?php echo $errors['firstName'] ?? '';?></div>
             </div>
             <div class="form-control">
                 <label>First name</label>

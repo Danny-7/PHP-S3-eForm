@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`id_nom`, `nom`, `prenom`, `num`, `email`) VALUES
+INSERT INTO `utilisateur` (`nom`, `prenom`, `num`, `email`) VALUES
 ('Berger', 'Julien', '99', 'julien.berger@free.fr'),
 ('Karl', 'Karl', '*9431C7A869750E4D2CEA958867640D290012DA18', 'kerl2@gmail.com'),
 ('Pont', 'Hélene', 'd435a6cdd786300dff204ee7c2ef942d3e9034e2', 'helene.pont@parisdescartes.fr'),

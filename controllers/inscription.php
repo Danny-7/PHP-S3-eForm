@@ -5,7 +5,7 @@
     function checkEmail($email){
         $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/'; 
         return preg_match($regex, $email);
-    }
+    };
 
     function getData($data) {
         return isset($_POST[$data]) ? htmlspecialchars($_POST[$data]) : '';
@@ -24,12 +24,12 @@
     function verifAllData($user, &$errors){
         foreach($user as $label => $info ){
             if(empty($info)){
-                array_push($errors, "Il manque des informations ". $label);
+                $errors[$label] = "Veuillez entrer votre ".$label;
                 return false;
             }
             if($label == 'email'){
                 if(!checkEmail($info)) {
-                    array_push($errors, "Enter a valid email");
+                    $errors['email'] = "Enter a valid Email";
                 }
             }
         }
@@ -44,8 +44,7 @@
             insertData($user['lastName'], $user['firstName'], $user['number'], $user['email'], $bdd);
         }
         else{
-            var_dump($errors);
-            // header("Location: ./inscription.php");
+            require("../views/inscription.tpl");
         }
     }
 

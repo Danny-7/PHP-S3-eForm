@@ -4,7 +4,7 @@
     $GLOBALS['FETCH'] = 'SELECT * FROM utilisateur WHERE email=? AND num=?';
 
     try {
-        $bdd = new PDO ('mysql:host=localhost;dbname=econtact;charset=utf8', 'root', '');
+        $bdd = new PDO ('mysql:host=localhost;dbname=econtact;charset=utf8', 'root', 'root');
     }
     catch (PDOException $e) {
         echo ("Echec de connexion : " . utf8_encode($e->getMessage()) . "\n");
