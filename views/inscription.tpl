@@ -10,32 +10,31 @@
 </head>
 
 <body>
+<div class="container">
     <div class="form-container">
         <form action="../controllers/inscription.php" method="POST">
-            <h1>Inscription</h1>
+            <h1>Créer un compte</h1>
             <div class="form-control">
-                <label>Last name</label>
-                <input class="" type="text" name="lastName" value="<?php echo $user['lastName'] ?>">
-                <div class="error"><?php echo $errors['lastName'] ?></div>
+                <input class="" type="text" name="lastName" placeholder="Last name" value="<?php echo $user['lastName'] ?? "" ?>">
+                <div class="error"><?php echo $errors['lastName'] ?? "" ?></div>
             </div>
             <div class="form-control">
-                <label>First name</label>
-                <input class="" type="text" name="firstName" value="<?php echo $user['firstName'] ?>">
-                <div class="error"><?php echo $errors['firstName'] ?></div>
+                <input class="" type="text" name="firstName" placeholder="First name" value="<?php echo $user['firstName'] ?? "" ?>">
+                <div class="error"><?php echo $errors['firstName'] ?? "" ?></div>
             </div>
             <div class="form-control">
-                <label>Number</label>
-                <input class="" type="text" name="number" value="<?php echo $user['number'] ?>">
-                <div class="error"><?php echo $errors['number'] ?></div>
+                <input class="" type="text" name="number" placeholder="Number" value="<?php echo $user['number'] ?? "" ?>">
+                <div class="error"><?php echo $errors['number'] ?? "" ?></div>
             </div>
             <div class="form-control">
-                <label>Email</label>
-                <input class="" type="text" name="email" value="<?php echo $user['email'] ?>">
-                <div class="error"><?php echo $errors['email'] ?></div>
+                <input class="" type="text" name="email" placeholder="Email" value="<?php echo $user['email'] ?? "" ?>">
+                <div class="error"><?php echo $errors['email'] ?? "" ?></div>
             </div>
-            <button type="submit" class="form-btn rounded">Send</button>
+            <button type="submit" class="form-btn">Send</button>
         </form>
     </div>
+</div>
+
 
 </body>
 

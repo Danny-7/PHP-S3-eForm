@@ -4,19 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Login</title>
 </head>
 <body>
-    <form action="../controllers/" method="post">
-        <h1>Login</h1>
-        <div class="input-form">
-            <label>Email</label>
-            <input type="text" name="email" required>
-        </div>
-        <div class="input-form">
-            <label>Number</label>
-            <input type="text" name="number" required>
-        </div>
-    </form>
+<div class="container">
+    <div class="form-container">
+        <form action="../controllers/login.php" method="post">
+            <h1>Login</h1>
+            <div class="form-control">
+                <input type="text" name="email" placeholder="Email" value="<?php echo $user['email'] ?? "" ?>">
+                <div class="error"><?php echo $errors['email'] ?? "" ?></div>
+            </div>
+            <div class="form-control">
+                <input type="text" name="number" placeholder="Number" value="<?php echo $user['number'] ?? "" ?>">
+                <div class="error"><?php echo $errors['number'] ?? "" ?></div>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
+
 </body>
 </html>

@@ -3,18 +3,23 @@
     $GLOBALS['INSERT'] = 'INSERT INTO utilisateur (nom, prenom, num, email) VALUES(?, ?, ?, ?)';
     $GLOBALS['FETCH'] = 'SELECT * FROM utilisateur WHERE email=? AND num=?';
 
-    try {
-        $bdd = new PDO ('mysql:host=localhost;dbname=econtact;charset=utf8', 'root', 'root');
-    }
-    catch (PDOException $e) {
-        echo ("Echec de connexion : " . utf8_encode($e->getMessage()) . "\n");
+    function connect(){
+        $bdd = null;
+        try {
+            $bdd = new PDO ('mysql:host=localhost;dbname=econtact;charset=utf8', 'root', '');
+        }
+        catch (PDOException $e) {
+            echo ("Echec de connexion : " . utf8_encode($e->getMessage()) . "\n");
+        }
+        return $bdd;
     }
 
-    function insertData($lastName, $firstName, $num, $email, $bdd) {
+    function insertData($lastName, $firstName, $num, $email) {
+        $bdd = connect();
         $num = password_hash($num, PASSWORD_BCRYPT);
         try{
             $stmt = $bdd->prepare($GLOBALS['INSERT']);
-            $stmt = $stmt->execute([
+            $stmt->execute([
                 $lastName,
                 $firstName,
                 $num,
@@ -26,9 +31,10 @@
         
     };
 
-    function fetchUser($email, $num, $bdd) {
+    function fetchUser($email, $num) {
+        $bdd = connect();
         $stmt = $bdd->prepare($GLOBALS['FETCH']);
-        $stmt = $stmt->execute(array(
+        $stmt->execute(array(
             $email,
             $num
         ));
@@ -38,7 +44,8 @@
         return null;
     }
 
-    function checkUser($email, $num, $bdd) {
-        return fetchUser($email, $num, $bdd) ? true: false;
+    function checkUser($email, $num) {
+        $bdd = connect();
+        return fetchUser($email, $num, $bdd);
     };
 

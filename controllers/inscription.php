@@ -42,12 +42,7 @@
     };
 
     $user = array();
-    $errors = array(
-        'lastName' => "",
-        'firstName' => "",
-        'number' => "",
-        'email' => ""
-    );
+    $errors = array();
 
     $user['lastName'] = getData('lastName');
     $user['firstName'] = getData('firstName');
@@ -83,7 +78,7 @@
             }
             if($label == 'email'){
                 if(!checkEmail($info)) {
-                    $errors['email'] = "Entrer une adresse email valide";
+                    $errors['email'] = "Entrez une adresse email valide";
                     $isErrors = true;
                 }
             }
@@ -97,7 +92,7 @@
         require("../views/inscription.tpl");
     else{
         if(verifAllData($user, $errors)){
-            insertData($user['lastName'], $user['firstName'], $user['number'], $user['email'], $bdd);
+            insertData($user['lastName'], $user['firstName'], $user['number'], $user['email']);
         }
         else{
             require("../views/inscription.tpl");
