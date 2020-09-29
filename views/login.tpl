@@ -21,6 +21,7 @@
                 <div class="error"><?php echo $errors['number'] ?? "" ?></div>
             </div>
             <button type="submit">Login</button>
+            <div class="error"><?php echo $errors['user'] ?? "" ?></div>
         </form>
     </div>
 </div>

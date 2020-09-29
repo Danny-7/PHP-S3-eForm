@@ -1,35 +1,22 @@
 <?php
 
-    require("./config.php");
-
-    function checkEmail($email){
-        $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/'; 
-        return preg_match($regex, $email);
-    };
-
-    function checkInfo($data){
-        return strlen($data) < 20;
-    }
-
-    function checkNumber($data){
-        $regex = '/^(?=.*[a-zA-Z])(?=.*[0-9])/';
-        return preg_match($regex, $data);
-    }
+    require_once("../models/db.php");
+    require_once("../utils/validation.php");
 
     function checkIsEmpty($data, $label){
         if(empty($data)){
             switch($label){
                 case 'lastName':
-                    $errors['lastName'] = "Veuillez entrer un nom";
+                    $errors['lastName'] = "Please enter a last name";
                     break;
                 case 'firstName':
-                    $errors['firstName'] = "Veuillez entrer un prénom";
+                    $errors['firstName'] = "Please enter a first name";
                     break;
                 case 'number':
-                    $errors['number'] = "Veuillez entrer un numéro de matricule";
+                    $errors['number'] = "PLease enter a license number";
                     break;
                 case 'email': 
-                    $errors['email'] = "Veuillez entrer une adresse email";
+                    $errors['email'] = "Please enter an email address";
                     break;
             }
             return true;
@@ -54,31 +41,27 @@
     function verifAllData($user, &$errors){
         $isErrors = false;
         foreach($user as $label => $info ){
-            if(checkIsEmpty($info, $label)){
-                $errors[$label] = "Veuillez entrer cette information";
-                $isErrors = true;
-            }
             if($label == 'lastName'){
                 if(!checkInfo($info)){
-                    $errors['lastName'] = "Veuillez entrer un nom valide";
+                    $errors['lastName'] = "Please enter a valid first name";
                     $isErrors = true;
                 }
             }
             if($label == 'firstName'){
                 if(!checkInfo($info)){
-                    $errors['firstName'] = "Veuillez entrer un prénom valide";
+                    $errors['firstName'] = "Please enter a valid last name";
                     $isErrors = true;
                 }
             }
             if($label == 'number'){
                 if(!checkNumber($info)){
-                    $errors['number'] = "Veuillez entrer un numéro de matricule valide";
+                    $errors['number'] = "Please enter a valid license number";
                     $isErrors = true;
                 }
             }
             if($label == 'email'){
                 if(!checkEmail($info)) {
-                    $errors['email'] = "Entrez une adresse email valide";
+                    $errors['email'] = "Please enter a valid email address";
                     $isErrors = true;
                 }
             }
@@ -93,6 +76,7 @@
     else{
         if(verifAllData($user, $errors)){
             insertData($user['lastName'], $user['firstName'], $user['number'], $user['email']);
+            require("../views/login.tpl");
         }
         else{
             require("../views/inscription.tpl");

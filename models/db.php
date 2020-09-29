@@ -1,7 +1,7 @@
 <?php
     
     $GLOBALS['INSERT'] = 'INSERT INTO utilisateur (nom, prenom, num, email) VALUES(?, ?, ?, ?)';
-    $GLOBALS['FETCH'] = 'SELECT * FROM utilisateur WHERE email=? AND num=?';
+    $GLOBALS['FETCH'] = 'SELECT * FROM utilisateur WHERE email=?';
 
     function connect(){
         $bdd = null;
@@ -35,17 +35,19 @@
         $bdd = connect();
         $stmt = $bdd->prepare($GLOBALS['FETCH']);
         $stmt->execute(array(
-            $email,
-            $num
+            $email
         ));
         if($stmt->rowCount() > 0){
-            return $stmt->fetch();
+            $row = $stmt->fetch();
+            if(password_verify($num, $row['num']))
+                return $row;
+            else
+                return null;
         }
         return null;
     }
 
     function checkUser($email, $num) {
-        $bdd = connect();
-        return fetchUser($email, $num, $bdd);
+        return fetchUser($email, $num);
     };
 
