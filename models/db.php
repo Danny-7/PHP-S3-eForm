@@ -3,6 +3,7 @@
     $GLOBALS['INSERT'] = 'INSERT INTO utilisateur (nom, prenom, num, email) VALUES(?, ?, ?, ?)';
     $GLOBALS['FETCH'] = 'SELECT * FROM utilisateur WHERE email=?';
 
+    // allows to get a connection to the database
     function connect(){
         $bdd = null;
         try {
@@ -14,6 +15,7 @@
         return $bdd;
     }
 
+    // function to insert an user
     function insertData($lastName, $firstName, $num, $email) {
         $bdd = connect();
         $num = password_hash($num, PASSWORD_BCRYPT);
@@ -29,16 +31,22 @@
             die("Echec d'insertion: ".utf8_encode($e->getMessage()));
         }
         
-    };
+    }
 
-    function fetchUser($email, $num) {
+    // get an user with an email
+    function fetchUser($email) {
         $bdd = connect();
         $stmt = $bdd->prepare($GLOBALS['FETCH']);
         $stmt->execute(array(
             $email
         ));
-        if($stmt->rowCount() > 0){
-            $row = $stmt->fetch();
+        return $stmt->fetch();
+    }
+
+    // check if the password given correspond to the user license number
+    function checkUser($email, $num) {
+        $row = fetchUser($email);
+        if($row != null){
             if(password_verify($num, $row['num']))
                 return $row;
             else
@@ -46,8 +54,4 @@
         }
         return null;
     }
-
-    function checkUser($email, $num) {
-        return fetchUser($email, $num);
-    };
 

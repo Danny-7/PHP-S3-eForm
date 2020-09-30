@@ -43,25 +43,30 @@
         foreach($user as $label => $info ){
             if($label == 'lastName'){
                 if(!checkInfo($info)){
-                    $errors['lastName'] = "Please enter a valid first name";
+                    $errors['lastName'] = "Please enter a valid last name";
                     $isErrors = true;
                 }
             }
             if($label == 'firstName'){
                 if(!checkInfo($info)){
-                    $errors['firstName'] = "Please enter a valid last name";
+                    $errors['firstName'] = "Please enter a valid first name";
                     $isErrors = true;
                 }
             }
             if($label == 'number'){
                 if(!checkNumber($info)){
-                    $errors['number'] = "Please enter a valid license number";
+                    $errors['number'] = "Please enter a valid license number. 
+            The license number must be between 8 and 10 characters, numbers";
                     $isErrors = true;
                 }
             }
             if($label == 'email'){
                 if(!checkEmail($info)) {
                     $errors['email'] = "Please enter a valid email address";
+                    $isErrors = true;
+                }
+                elseif (fetchUser($info) != null){
+                    $errors['email'] = "This email address correspond to another account";
                     $isErrors = true;
                 }
             }
@@ -72,14 +77,14 @@
 
 
     if(count($_POST) == 0)
-        require("../views/inscription.tpl");
+        require("../views/signup.tpl");
     else{
         if(verifAllData($user, $errors)){
             insertData($user['lastName'], $user['firstName'], $user['number'], $user['email']);
-            require("../views/login.tpl");
+            header("Location: ./login.php");
         }
         else{
-            require("../views/inscription.tpl");
+            require("../views/signup.tpl");
         }
     }
 

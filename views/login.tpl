@@ -21,7 +21,12 @@
                 <div class="error"><?php echo $errors['number'] ?? "" ?></div>
             </div>
             <button type="submit">Login</button>
-            <div class="error"><?php echo $errors['user'] ?? "" ?></div>
+            <div class="error form-error"><?php echo $errors['user'] ?? "" ?></div>
+            <div class="signup-control">
+                <p class="signup">Or create an account</p>
+                <button type="reset" class="redirect" onClick="document.location.href='/controllers/signup.php'">Sign up</button>
+            </div>
+
         </form>
     </div>
 </div>

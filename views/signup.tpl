@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <div class="form-container">
-        <form action="../controllers/inscription.php" method="POST">
+        <form action="../controllers/signup.php" method="POST">
             <h1>Create an account</h1>
             <div class="form-control">
                 <input class="" type="text" name="lastName" placeholder="Last name" value="<?php echo $user['lastName'] ?? "" ?>">

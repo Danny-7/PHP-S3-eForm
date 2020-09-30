@@ -24,7 +24,8 @@
         if(empty($user['number']))
             $errors['number'] = "You may enter your number ";
         elseif (!checkNumber($user['number']))
-            $errors['number'] = "Please enter a valid license number";
+            $errors['number'] = "Please enter a valid license number. 
+            The license number must be between 8 and 10 characters, numbers";
     }
 
     if(count($_POST) == 0)
